@@ -4,6 +4,8 @@ body {
 
     display: grid;
     place-items: center;
+
+    font-family: monospace;
 }
 
 .container {
@@ -13,4 +15,11 @@ body {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: 1fr 1fr 1fr;
+}
+
+.container > div {
+    text-align: center;
+    font-size: 2rem;
+    
+    border: 1px solid rgba(0,0,0,.2)
 }
