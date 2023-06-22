@@ -30,10 +30,28 @@ const gameBoard = (()=>{
         boardCells.length = 0;
     };
 
+    const win = ()=>{
+        setTimeout(() => {
+            currentPlayer.wins++
+            players[0].move = 0;
+            players[1].move = 0;
+
+            clearBoard();
+            createBoard();
+            initBoard();
+
+            currentPlayer = players[0];
+        }, 1000);
+
+        console.log("??????????")
+    }
+
     const initBoard = ()=>{
+        let finished = false
+
         for (cell of boardCells) {
             cell.addEventListener('click', e=>{
-                if (e.target.dataset.marker !== "") return;
+                if (e.target.dataset.marker !== "" || finished) return;
 
                 e.target.dataset.marker = currentPlayer.marker;
                 e.target.innerText = currentPlayer.marker;
@@ -54,7 +72,13 @@ const gameBoard = (()=>{
                                 tempStr = prev
                                 continue;
                             } else if (tempStr.length === 3 && winScenarios.includes(tempStr)){
-                                console.log("WIN!")
+                                for (let i = 0; i < 3; i++) {
+                                    console.log('test')
+                                    console.log( boardCells[tempStr[i]]);
+                                    boardCells[tempStr[i]].style.setProperty('color','red');
+                                }
+                                finished = true;
+                                win()
                                 return;
                             }
                         }
@@ -71,7 +95,8 @@ const gameBoard = (()=>{
 
 const Player = (name, marker) => {
     let move = 0;
-    return {name, marker, move};
+    let wins = 0;
+    return {name, marker, move, wins};
 };
 
 players.push(Player("player1", "X"));
