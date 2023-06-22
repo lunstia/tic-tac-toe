@@ -1,19 +1,35 @@
-const boardContainer = document.querySelector(".container");
+const Player = (name, marker) => {
+    let move = 0;
+    let wins = 0;
+    return {name, marker, move, wins};
+};
 
-let currentPlayer;
 let players = [];
 
-// 0  1  2
-// 3  4  5
-// 6  7  8
-
-let winScenarios = "048 246 036 147 258 012 345 678";
-
+players.push(Player("Player 1", "X"));
+players.push(Player("Player 2", "O"));
 
 const gameBoard = (()=>{
     let boardCells = [];
 
+    const boardContainer = document.querySelector(".container");
+    const player1 = document.querySelector("#player1");
+    const player2 = document.querySelector("#player2");
+
+    player1.innerText = `${players[0].name}: ${players[0].wins}`
+    player2.innerText = `${players[1].name}: ${players[1].wins}`
+
+    let currentPlayer;
+    
+
+    // 0  1  2
+    // 3  4  5
+    // 6  7  8
+
+    let winScenarios = "048 246 036 147 258 012 345 678";
+
     const createBoard = ()=>{
+        currentPlayer = players[0];
         boardCells = [];
 
         for (let i = 0; i < 9; i++) {
@@ -31,19 +47,19 @@ const gameBoard = (()=>{
     };
 
     const win = ()=>{
+        currentPlayer.wins++
+
+        player1.innerText = `${players[0].name}: ${players[0].wins}`
+        player2.innerText = `${players[1].name}: ${players[1].wins}`
+
         setTimeout(() => {
-            currentPlayer.wins++
             players[0].move = 0;
             players[1].move = 0;
 
             clearBoard();
             createBoard();
             initBoard();
-
-            currentPlayer = players[0];
         }, 1000);
-
-        console.log("??????????")
     }
 
     const initBoard = ()=>{
@@ -93,16 +109,11 @@ const gameBoard = (()=>{
     return {createBoard, clearBoard, initBoard};
 })();
 
-const Player = (name, marker) => {
-    let move = 0;
-    let wins = 0;
-    return {name, marker, move, wins};
-};
 
-players.push(Player("player1", "X"));
-players.push(Player("player2", "O"));
 
-currentPlayer = players[0];
+
+
+
 
 gameBoard.createBoard();
 gameBoard.initBoard();
