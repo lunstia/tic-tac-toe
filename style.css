@@ -1,0 +1,16 @@
+body {
+    height: 100vh;
+    height: 100svh;
+
+    display: grid;
+    place-items: center;
+}
+
+.container {
+    width: 400px;
+    height: 400px;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+}
